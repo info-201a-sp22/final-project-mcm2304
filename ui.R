@@ -9,7 +9,7 @@ intro_tab <- tabPanel(
   "Introduction",
   fluidPage(
     h1("Introduction", align = "center"),
-    textOutput(outputId = "intro")
+    includeMarkdown("introduction.md")
   )
 )
 

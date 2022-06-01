@@ -215,63 +215,18 @@ pre code {
 </div>
 <div id="the-dataset" class="section level3">
 <h3>The Dataset</h3>
-<ol style="list-style-type: decimal">
-<li>Where did you find the data? Please include a link to the data source<br />
-</li>
-</ol>
-<ul>
-<li><a href="https://data.seattle.gov/dataset/Collisions/g983-vrct">City of Seattle Official Website</a>.</li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
-<li>Who collected the data?<br />
-</li>
-</ol>
-<ul>
-<li><a href="https://www.seattle.gov/tech/initiatives/open-data">City of Seattle GIS Program</a>.</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>How was the data collected or generated?<br />
-</li>
-</ol>
-<ul>
-<li>All collisions are provided by SPD and recorded by Traffic Records. It is consistently updated every week.</li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Why was the data collected?<br />
-</li>
-</ol>
-<ul>
-<li>The data was collected in order for the city of Seattle to keep track of all collisions that occur within the city.</li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
-<li>How many observations (rows) are in your data?<br />
-</li>
-</ol>
-<ul>
-<li>As of April 25, 2022, there are 234,016 rows.</li>
-</ul>
-<ol start="6" style="list-style-type: decimal">
-<li>How many features (columns) are in the data?<br />
-</li>
-</ol>
-<ul>
-<li>There are 40 columns.</li>
-</ul>
-<ol start="7" style="list-style-type: decimal">
-<li>What, if any, ethical questions or questions of power do you need to consider when working with this data?</li>
-</ol>
+<p>This project is sourced from <a href="https://data.seattle.gov/dataset/Collisions/g983-vrct">City of Seattle Official Website</a>, in which the data is collected by <a href="https://www.seattle.gov/tech/initiatives/open-data">City of Seattle GIS Program</a>. All collisions are provided by SPD and recorded by Traffic Records. It is consistently updated every week. As of April 25, 2022, there are 234,522 rows (observations) and 40 columns (features) in this dataset. The data was collected in order for the city of Seattle to keep track of all collisions that occur within the city. When working with this data, the following ethical concerns should be addressed:</p>
 <ul>
 <li>Do certain factors, such as race or gender, influence the level of severity recorded for a collision?</li>
 <li>What factors influence whether a collision is recorded at all?</li>
 <li>Is a certain gender more likely to cause collisions than others?</li>
 <li>Does race play a role?</li>
 </ul>
-<ol start="8" style="list-style-type: decimal">
-<li>What are possible limitations or problems with this data?</li>
-</ol>
-<ul>
-<li>In this dataset, there are a large number of observations, which means that it may be difficult to clean up and select useful data for further analysis. Because there are more than two hundred thousand rows of data, it will be difficult to find relevant information and focus our research on a few key questions. After a quick skim through the dataset, it becomes clear that there are numerous blank spaces and NA/null values. Despite the fact that it is desirable to have a diverse set of data, there is a possibility that certain columns will only contain a small number of entries, resulting in weaker evidence for us. Another issue with this dataset is that it is updated on a weekly basis, which is a constant source of contention. Because we insist on having the most up-to-date information, we have to download the new CSV file as soon as it is released on a regular basis. Another significant issue that arises is a lack of representation. With old data, the people who were collecting could have easily limited their records to people of color while neglecting to keep track of everyone else. Since the early 2000s, this dataset contains information, and it is useful to have historical information to compare with because there may be many discrepancies and inconsistencies as a result of technological advancement.</li>
-</ul>
+</div>
+<div id="limitations-and-challenges" class="section level2">
+<h2>Limitations and Challenges</h2>
+<p>In this dataset, there are a large number of observations, which means that it may be difficult to clean up and select useful data for further analysis. Because there are more than two hundred thousand rows of data, it will be difficult to find relevant information and focus our research on a few key questions. After a quick skim through the dataset, it becomes clear that there are numerous blank spaces and NA/null values. Despite the fact that it is desirable to have a diverse set of data, there is a possibility that certain columns will only contain a small number of entries, resulting in weaker evidence for us. Another issue with this dataset is that it is updated on a weekly basis, which is a constant source of contention. Because we insist on having the most up-to-date information, we have to download the new CSV file as soon as it is released on a regular basis. Another significant issue that arises is a lack of representation. With old data, the people who were collecting could have easily limited their records to people of color while neglecting to keep track of everyone else. Since the early 2000s, this dataset contains information, and it is useful to have historical information to compare with because there may be many discrepancies and inconsistencies as a result of technological advancement.</p>
+<p>In general, this dataset is fairly concise but there are a few challenges and limitations. As one of the columns reports severity code, this could show observer bias since severity is subjective and can differ from person to person. There are also two different columns that describe injuries versus serious injuries but I think that it could be clearer what is considered an injury along with how to differentiate between a normal injury and a severe one. One solution to that is more than 3 severity codes so they can encompass more scenarios. There could also be reporting bias as another column reports speeding but participants may underreport or may not be willing to disclose that they were speeding. This dataset also doesn’t allow one to draw causation, only correlation. It would be difficult to say what the crash was caused by so it’s hard to draw conclusions and come out with an accurate experiment result.</p>
 </div>
 
 
