@@ -1,8 +1,12 @@
 library(bslib)
+library(plotly)
+library(markdown)
 
 
 my_theme <- bs_theme(bootswatch = "cerulean")
 
+
+# 1. Introduction ----
 
 # Introduction tab panel
 intro_tab <- tabPanel(
@@ -13,26 +17,51 @@ intro_tab <- tabPanel(
   )
 )
 
+# 2. Chart 1 ----
 
 # Visualization tab
 chart1_tab <- tabPanel(
   "Chart 1"
 )
 
-
+# 3. Chart 2 ----
 
 # Visualization tab
 chart2_tab <- tabPanel(
   "Chart 2"
 )
 
+# 4. Chart 3 ----
 
+# Widget
+chart3_widget <- sidebarPanel(
+  radioButtons(
+    inputId = "condition_selection",
+    label = h6("Select a condition"),
+    choices = list(
+      "Weather" = 1,
+      "Road" = 2,
+      "Light" = 3
+    ),
+    selected = 1
+  )
+)
+
+# Plot
+chart3_plot <- mainPanel(
+  plotlyOutput(outputId = "condition_chart")
+)
 
 # Visualization tab
 chart3_tab <- tabPanel(
-  "Chart 3"
+  "Chart 3",
+  sidebarLayout(
+    chart3_widget,
+    chart3_plot
+  )
 )
 
+# 5. Conclusion ----
 
 # Conclusion tab panel
 conclusion_tab <- tabPanel(
@@ -42,6 +71,7 @@ conclusion_tab <- tabPanel(
   )
 )
 
+# 6. UI ----
 
 # User interface
 ui <- navbarPage(
