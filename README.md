@@ -8,7 +8,7 @@
 1. Joseph Tran (jknt@uw.edu)
 1. Clarice Wang (cjwang13@uw.edu)
 
-Link: Link to your Shiny App here
+Link: Link to Shiny App [here](https://mcm2304.shinyapps.io/seattle-collisions/)
 
 Please create the necessary files for your multi-page Shiny app in this GitHub repository. Consult the Canvas assignment for more details. Be sure to publish your app on Shinyapps.io.
 
