@@ -1,4 +1,4 @@
-# Title of Your Final Project Here 
+# Seattle Collisions
 ## INFO 201 "Foundational Skills for Data Science" — Spring 2022
 
 ### Authors
