@@ -1,7 +1,12 @@
 # Title of Your Final Project Here 
 ## INFO 201 "Foundational Skills for Data Science" — Spring 2022
 
-Authors: Your names here
+### Authors
+1. Nancy Huang (nhuang1@uw.edu)
+1. Minh Mai (mcm2304@uw.edu)
+1. David Qin (sqin2019@uw.edu)
+1. Joseph Tran (jknt@uw.edu)
+1. Clarice Wang (cjwang13@uw.edu)
 
 Link: Link to your Shiny App here
 
