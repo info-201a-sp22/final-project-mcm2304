@@ -5,7 +5,6 @@ library(plotly)
 library(markdown)
 
 
-my_theme <- bs_theme(bootswatch = "cerulean")
 
 
 # Load and clean up data ----
@@ -35,7 +34,7 @@ collisions_df <- collisions_df %>%
 # Update dates
 dates <- as.Date(collisions_df$INCDATE)
 
-# 1. Introduction ----
+# Introduction ----
 
 # Introduction tab panel
 intro_tab <- tabPanel(
@@ -46,7 +45,7 @@ intro_tab <- tabPanel(
   )
 )
 
-# 2. Chart 1 ----
+# Chart 1 ----
 
 # Widget
 chart1_widget <- sidebarPanel(
@@ -55,7 +54,7 @@ chart1_widget <- sidebarPanel(
     label = h6("Select up to 4 years"),
     choices = sort(unique(collisions_df$YEAR)),
     options = list(maxItems = 4, placeholder = "Select a year"),
-    selected = "2021",
+    selected = "2004",
     multiple = T
   )
 )
@@ -74,7 +73,7 @@ chart1_tab <- tabPanel(
   )
 )
 
-# 3. Chart 2 ----
+# Chart 2 ----
 
 # Widget
 chart2_widget <- sidebarPanel(
@@ -104,7 +103,7 @@ chart2_tab <- tabPanel(
   )
 )
 
-# 4. Chart 3 ----
+# Chart 3 ----
 
 # Widget
 chart3_widget <- sidebarPanel(
@@ -134,7 +133,7 @@ chart3_tab <- tabPanel(
   )
 )
 
-# 5. Conclusion ----
+# Conclusion ----
 
 # Conclusion tab panel
 conclusion_tab <- tabPanel(
@@ -146,6 +145,9 @@ conclusion_tab <- tabPanel(
 )
 
 # 6. UI ----
+
+# Theme
+my_theme <- bs_theme(bootswatch = "cerulean")
 
 # User interface
 ui <- navbarPage(
