@@ -3,6 +3,7 @@ library(plotly)
 library(lubridate)
 library(bslib)
 library(markdown)
+library(thematic)
 
 
 # Load and clean up data ----
@@ -65,7 +66,7 @@ intro_tab <- tabPanel(
       tabPanel(
         "About Us",
         includeMarkdown("text-files/about-us.md")
-      ),
+      )
     )
   )
 )
@@ -235,6 +236,12 @@ conclusion_tab <- tabPanel(
 
 # Theme
 my_theme <- bs_theme(bootswatch = "cerulean")
+
+# Enable thematic for every plot inside the app
+thematic_shiny(font = "auto")
+
+# Change all the plots to reflect RStudio theme
+thematic::thematic_on()
 
 # User interface
 ui <- navbarPage(
