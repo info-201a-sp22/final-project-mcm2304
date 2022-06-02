@@ -5,8 +5,6 @@ library(plotly)
 library(markdown)
 
 
-
-
 # Load and clean up data ----
 
 # Load original data
@@ -39,9 +37,11 @@ dates <- as.Date(collisions_df$INCDATE)
 # Introduction tab panel
 intro_tab <- tabPanel(
   "Introduction",
-  fluidPage(
-    h1("Introduction", align = "center"),
-    includeMarkdown("introduction.md")
+  mainPanel(
+    tabsetPanel(
+      type = "tabs",
+      tabPanel("About Us", includeMarkdown("introduction.md")),
+    )
   )
 )
 
