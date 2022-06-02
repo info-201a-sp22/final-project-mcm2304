@@ -158,7 +158,9 @@ viz_tab <- navbarMenu(
   "Visualization",
   tabPanel(
     "Collision Trends Over Time",
-    sidebarLayout(chart1_widget, chart1_plot)
+    sidebarLayout(chart1_widget, chart1_plot),
+    hr(),
+    includeMarkdown("text-files/about-us.md")
   ),
   tabPanel(
     "Casualties from Collisions",
@@ -184,7 +186,7 @@ table_panel <- sidebarPanel(
 
 # Table summary
 summary_panel <- mainPanel(
-  p("We included this table since it breaks down different parts of the dataset concisely and efficiently from 2004 to 2021. It includes four different categories that includes the number of collisions that occurred with the driver under the influence, number of collisions that resulted in injuries, the number of people involved and the overall total collisions."),
+  includeMarkdown("text-files/table-summary.md"),
   width = 7
 )
 
@@ -193,16 +195,18 @@ conclusion_tab <- tabPanel(
   "Insights",
   tabsetPanel(
     type = "tabs",
-    tabPanel("Key Takeaways", includeMarkdown("text-files/insights.md")),
     tabPanel(
-      "Table Summary", 
+      "Key Takeaways", 
+      includeMarkdown("text-files/insights.md")),
+    tabPanel(
+      "Table Summary",
       sidebarLayout(
         summary_panel,
         table_panel,
         position = c("left", "right"),
         fluid = T
       )
-    ) 
+    )
   )
 )
 

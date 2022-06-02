@@ -212,7 +212,7 @@ server <- function(input, output) {
       geom_line() +
       labs(
         title = paste0("Collision Trends Over Time"),
-        x = "Months", y = "Number of Collisions", color = "Year"
+        x = "Months", y = "Number of Collisions", color = "Years"
       ) +
       overall_theme +
       scale_x_continuous(breaks = 1:12)

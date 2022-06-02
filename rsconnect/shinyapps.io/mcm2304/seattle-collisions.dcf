@@ -5,9 +5,9 @@ account: mcm2304
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6413694
-bundleId: 5970909
+bundleId: 5971098
 url: https://mcm2304.shinyapps.io/seattle-collisions/
-when: 1654160010.45449
-lastSyncTime: 1654160010.45449
+when: 1654165154.4609
+lastSyncTime: 1654165154.4609
 asMultiple: FALSE
 asStatic: FALSE
