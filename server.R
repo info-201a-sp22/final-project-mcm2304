@@ -259,7 +259,7 @@ server <- function(input, output) {
         overall_theme +
         scale_x_continuous(breaks = 1:12)
     }
-    
+
     return(plot)
   })
 

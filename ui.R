@@ -43,7 +43,9 @@ collision_types <- collisions_df %>%
 # Introduction tab panel
 intro_tab <- tabPanel(
   "Home Page",
-  HTML('<center><img src = "https://media.istockphoto.com/vectors/vector-of-two-car-accident-top-view-of-vehicle-collision-on-blue-vector-id1151971103?k=20&m=1151971103&s=612x612&w=0&h=QOsIoWB-41HXm-EuR6i5C2-7cGZSJfBJ9lxAvGtQErk=" width = "600"></center>'),
+  HTML(
+    '<center><img src = "https://media.istockphoto.com/vectors/vector-of-two-car-accident-top-view-of-vehicle-collision-on-blue-vector-id1151971103?k=20&m=1151971103&s=612x612&w=0&h=QOsIoWB-41HXm-EuR6i5C2-7cGZSJfBJ9lxAvGtQErk=" width = "600"></center>'
+  ),
   hr(),
   mainPanel(
     tabsetPanel(
