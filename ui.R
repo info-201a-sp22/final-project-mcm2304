@@ -32,6 +32,12 @@ collisions_df <- collisions_df %>%
 # Update dates
 dates <- as.Date(collisions_df$INCDATE)
 
+# Collision types
+collision_types <- collisions_df %>%
+  group_by(COLLISIONTYPE) %>%
+  tally() %>%
+  na.omit()
+
 # Introduction ----
 
 # Introduction tab panel
@@ -66,7 +72,7 @@ intro_tab <- tabPanel(
 chart1_widget <- sidebarPanel(
   selectizeInput(
     inputId = "year1_selection",
-    label = h6("Select up to 4 years"),
+    label = h6("Select up to 4 years to compare"),
     choices = sort(unique(collisions_df$YEAR)),
     options = list(maxItems = 4, placeholder = "Select a year"),
     selected = "2004",
@@ -85,7 +91,7 @@ chart1_plot <- mainPanel(
 chart2_widget <- sidebarPanel(
   checkboxGroupInput(
     inputId = "casualty_selection",
-    label = h6("Select a casualty type"),
+    label = h6("Select a casualty type(s)"),
     choices = list(
       "Injuries" = "Injuries",
       "Serious Injuries" = "Serious Injuries",
@@ -130,8 +136,14 @@ chart4_widget <- sidebarPanel(
     label = h6("Select a year"),
     min = min(collisions_df$YEAR),
     max = max(collisions_df$YEAR),
-    value = 2004,
+    value = 2010,
     sep = ""
+  ),
+  checkboxGroupInput(
+    inputId = "coltype_selection",
+    label = h6("Select a collision type(s)"),
+    choices = collision_types$COLLISIONTYPE,
+    selected = collision_types$COLLISIONTYPE[1:5]
   )
 )
 
@@ -157,19 +169,40 @@ viz_tab <- navbarMenu(
     sidebarLayout(chart3_widget, chart3_plot)
   ),
   tabPanel(
-    "Collision Types",
+    "Collision Types Comparison",
     sidebarLayout(chart4_widget, chart4_plot)
   )
 )
 
 # Conclusion ----
 
+# Table panel
+table_panel <- sidebarPanel(
+  tableOutput(outputId = "table"),
+  width = 5
+)
+
+# Table summary
+summary_panel <- mainPanel(
+  p("We included this table since it breaks down different parts of the dataset concisely and efficiently from 2004 to 2021. It includes four different categories that includes the number of collisions that occurred with the driver under the influence, number of collisions that resulted in injuries, the number of people involved and the overall total collisions."),
+  width = 7
+)
+
 # Conclusion tab panel
 conclusion_tab <- tabPanel(
-  "Conclusion",
-  fluidPage(
-    h1("Key Takeaways", align = "center"),
-    includeMarkdown("text-files/conclusion.md")
+  "Insights",
+  tabsetPanel(
+    type = "tabs",
+    tabPanel("Key Takeaways", includeMarkdown("text-files/insights.md")),
+    tabPanel(
+      "Table Summary", 
+      sidebarLayout(
+        summary_panel,
+        table_panel,
+        position = c("left", "right"),
+        fluid = T
+      )
+    ) 
   )
 )
 

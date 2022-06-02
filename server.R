@@ -3,6 +3,8 @@ library(plotly)
 library(scales)
 library(lubridate)
 library(reshape2)
+library(knitr)
+library(naniar)
 
 
 # Load and clean up data ----
@@ -44,6 +46,31 @@ overall_theme <- theme(
   axis.title = element_text(size = (13), color = "steelblue4"),
   axis.text = element_text(color = "cornflowerblue", size = (10)),
 )
+
+# Calculate the total number of DUI cases
+under_influence <- collisions_df %>%
+  replace_with_na(replace = list(UNDERINFL = "N")) %>%
+  mutate(new_data = replace(UNDERINFL, UNDERINFL == "Y", 1)) %>%
+  group_by(YEAR) %>%
+  summarize(under_influence = sum(as.numeric(new_data), na.rm = T))
+
+# Summarize total injuries, people involved, and collisions per year
+summary <- collisions_df %>%
+  group_by(YEAR) %>%
+  summarize(
+    injuries = sum(INJURIES),
+    total_people = sum(PERSONCOUNT),
+    total_collisions = n()
+  )
+# Join under influence and summary data frames
+joined <- left_join(under_influence, summary) %>%
+  rename(
+    "Year" = YEAR,
+    "Under Influence" = under_influence,
+    "Injuries" = injuries,
+    "Total People" = total_people,
+    "Total Collisions" = total_collisions
+  )
 
 # Chart 2 ----
 
@@ -133,20 +160,23 @@ num_light_condition <- collisions_df %>%
 condition_plot <- function(data, type) {
   # Change column names to modify the code easier
   colnames(data)[1:2] <- c("condition_type", "number")
-  
+
   # Plot
   plot <- ggplot(data) +
     geom_col(aes(reorder(condition_type, desc(number)),
-                 number,
-                 fill = condition_type,
-                 text = paste0(
-                   "# of Accidents: ",
-                   formatC(number, big.mark = ",")
-                 )
+      number,
+      fill = condition_type,
+      text = paste0(
+        condition_type,
+        "\n# of Collisions: ",
+        formatC(number, big.mark = ",")
+      )
     )) +
     labs(
-      title = paste0("Total Number of Collisions by ", 
-                     type, " Conditions"),
+      title = paste0(
+        "Total Number of Collisions by ",
+        type, " Conditions"
+      ),
       x = paste0(type, " Condition"),
       y = "Number of Collisions",
       fill = paste0(type, " Condition")
@@ -159,7 +189,7 @@ condition_plot <- function(data, type) {
     scale_y_continuous(
       labels = label_number(scale_cut = cut_short_scale())
     )
-  
+
   # Make it interactive
   ggplotly(plot, tooltip = "text")
 }
@@ -174,33 +204,34 @@ server <- function(input, output) {
       mutate(Month = month(INCDATE)) %>%
       mutate(YEAR = as.character(YEAR)) %>%
       group_by(Month, YEAR) %>%
-      summarize(Collisions = n())
-    
-    plot <- ggplot(chart1_df, aes(x = Month, y = Collisions, color = YEAR)) +
+      summarize(Collisions = n()) %>%
+      rename(Year = YEAR)
+
+    plot <- ggplot(chart1_df, aes(x = Month, y = Collisions, color = Year)) +
       geom_point() +
       geom_line() +
       labs(
         title = paste0("Collision Trends Over Time"),
-        x = "Months", y = "Number of Collisions", color = "Year(s)"
+        x = "Months", y = "Number of Collisions", color = "Year"
       ) +
       overall_theme +
       scale_x_continuous(breaks = 1:12)
-    
+
     return(plot)
   })
-  
+
   # Chart 2
   data <- reactive(
     all_casualties_long %>%
       filter(all_casualties_long$Type %in%
-               input$casualty_selection)
+        input$casualty_selection)
   )
 
   output$chart2 <- renderPlotly({
     plot <- plot_casualties(data())
     return(plot)
   })
-  
+
   # Chart 3
   output$chart3 <- renderPlotly({
     if (input$condition_selection == 1) {
@@ -212,25 +243,36 @@ server <- function(input, output) {
     }
     return(plot)
   })
-    
+
   # Chart 4
   output$chart4 <- renderPlotly({
     collision_types <- collisions_df %>%
       filter(YEAR %in% input$year4_selection) %>%
+      filter(COLLISIONTYPE %in% input$coltype_selection) %>%
       group_by(COLLISIONTYPE) %>%
       tally() %>%
       na.omit()
-    
-    plot <- ggplot(collision_types, aes(reorder(COLLISIONTYPE, desc(n)), n, fill = COLLISIONTYPE)) +
+
+    plot <- ggplot(
+      collision_types,
+      aes(reorder(COLLISIONTYPE, desc(n)), n,
+        fill = COLLISIONTYPE,
+        text = paste0(COLLISIONTYPE, "\n# of Collisions: ", n)
+      )
+    ) +
       geom_col() +
       labs(
-        title = "Types of Collision",
+        title = paste0("Types of Collision in ", input$year4_selection),
         x = "Collision Types",
-        y = "Number of Accidents",
+        y = "Number of Collisions",
       ) +
       overall_theme +
+      theme(axis.text.x = element_text(angle = 45)) +
       theme(legend.position = "none")
-    
-    return(plot)
+
+    return(ggplotly(plot, tooltip = "text"))
   })
+
+  # Table
+  output$table <- renderTable(joined, align = "c", bordered = T, digits = 0)
 }
