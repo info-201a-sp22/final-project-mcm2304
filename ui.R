@@ -172,25 +172,33 @@ chart4_plot <- mainPanel(
 viz_tab <- navbarMenu(
   "Visualization",
   tabPanel(
-    "Collision Trends Over Time",
+    title = "Collision Trends Over Time",
+    h1(em("Collision Trends Over Time")),
+    hr(),
     sidebarLayout(chart1_widget, chart1_plot),
     hr(),
     includeMarkdown("text-files/collision-trends.md")
   ),
   tabPanel(
-    "Casualties from Collisions",
+    title = "Casualties from Collisions",
+    h1(em("Casualties from Collisions")),
+    hr(),
     sidebarLayout(chart2_widget, chart2_plot),
     hr(),
     includeMarkdown("text-files/casualties.md")
   ),
   tabPanel(
-    "Conditions during Accidents",
+    title = "Conditions during Accidents",
+    h1(em("Conditions during Accidents")),
+    hr(),
     sidebarLayout(chart3_widget, chart3_plot),
     hr(),
     includeMarkdown("text-files/conditions.md")
   ),
   tabPanel(
-    "Collision Types Comparison",
+    title = "Collision Types Comparison",
+    h1(em("Collision Types Comparison")),
+    hr(),
     sidebarLayout(chart4_widget, chart4_plot),
     hr(),
     includeMarkdown("text-files/collision-types.md")
