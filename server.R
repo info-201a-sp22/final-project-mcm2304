@@ -3,7 +3,6 @@ library(plotly)
 library(scales)
 library(lubridate)
 library(reshape2)
-library(knitr)
 library(naniar)
 
 
@@ -62,6 +61,7 @@ summary <- collisions_df %>%
     total_people = sum(PERSONCOUNT),
     total_collisions = n()
   )
+
 # Join under influence and summary data frames
 joined <- left_join(under_influence, summary) %>%
   rename(
@@ -72,7 +72,7 @@ joined <- left_join(under_influence, summary) %>%
     "Total Collisions" = total_collisions
   )
 
-# Chart 2 ----
+# Chart 2 data ----
 
 # Total number of injuries each year
 num_injuries <- collisions_df %>%
@@ -127,7 +127,7 @@ plot_casualties <- function(data) {
     scale_x_continuous(breaks = pretty_breaks())
 }
 
-# Chart 3 ----
+# Chart 3 data ----
 
 # Total number of each weather
 num_weather_condition <- collisions_df %>%
@@ -196,6 +196,18 @@ condition_plot <- function(data, type) {
 
 # Server ----
 
+trend_plot <- function(data, trend) {
+  ggplot(data, aes(x = Month, y = trend, color = Year)) +
+    geom_point() +
+    geom_line() +
+    labs(
+      title = paste0("Collision Trends Over Time"),
+      x = "Months", y = paste0("Number of ", trend), color = "Years"
+    ) +
+    overall_theme +
+    scale_x_continuous(breaks = 1:12)
+}
+
 server <- function(input, output) {
   # Chart 1
   output$chart1 <- renderPlotly({
@@ -204,19 +216,50 @@ server <- function(input, output) {
       mutate(Month = month(INCDATE)) %>%
       mutate(YEAR = as.character(YEAR)) %>%
       group_by(Month, YEAR) %>%
-      summarize(Collisions = n()) %>%
-      rename(Year = YEAR)
+      summarize(
+        total_collisions = n(),
+        total_people = sum(PERSONCOUNT),
+        total_vehicles = sum(VEHCOUNT)
+      ) %>%
+      rename(
+        "Year" = YEAR,
+        "Collisions" = total_collisions,
+        "People" = total_people,
+        "Vehicles" = total_vehicles
+      )
 
-    plot <- ggplot(chart1_df, aes(x = Month, y = Collisions, color = Year)) +
-      geom_point() +
-      geom_line() +
-      labs(
-        title = paste0("Collision Trends Over Time"),
-        x = "Months", y = "Number of Collisions", color = "Years"
-      ) +
-      overall_theme +
-      scale_x_continuous(breaks = 1:12)
-
+    if (input$trend_selection == 1) {
+      plot <- ggplot(chart1_df, aes(x = Month, y = Collisions, color = Year)) +
+        geom_point() +
+        geom_line() +
+        labs(
+          title = "Total Collisions Over Time",
+          x = "Months", y = "Number of Collisions", color = "Years"
+        ) +
+        overall_theme +
+        scale_x_continuous(breaks = 1:12)
+    } else if (input$trend_selection == 2) {
+      plot <- ggplot(chart1_df, aes(x = Month, y = People, color = Year)) +
+        geom_point() +
+        geom_line() +
+        labs(
+          title = "Total People Involved Over Time",
+          x = "Months", y = "Number of People Involved", color = "Years"
+        ) +
+        overall_theme +
+        scale_x_continuous(breaks = 1:12)
+    } else {
+      plot <- ggplot(chart1_df, aes(x = Month, y = Vehicles, color = Year)) +
+        geom_point() +
+        geom_line() +
+        labs(
+          title = "Total Vehicle Involved Over Time",
+          x = "Months", y = "Number of Vehicles Involved", color = "Years"
+        ) +
+        overall_theme +
+        scale_x_continuous(breaks = 1:12)
+    }
+    
     return(plot)
   })
 

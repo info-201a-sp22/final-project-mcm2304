@@ -1,7 +1,7 @@
-library(bslib)
 library(tidyverse)
-library(lubridate)
 library(plotly)
+library(lubridate)
+library(bslib)
 library(markdown)
 
 
@@ -43,6 +43,8 @@ collision_types <- collisions_df %>%
 # Introduction tab panel
 intro_tab <- tabPanel(
   "Home Page",
+  HTML('<center><img src = "https://media.istockphoto.com/vectors/vector-of-two-car-accident-top-view-of-vehicle-collision-on-blue-vector-id1151971103?k=20&m=1151971103&s=612x612&w=0&h=QOsIoWB-41HXm-EuR6i5C2-7cGZSJfBJ9lxAvGtQErk=" width = "600"></center>'),
+  hr(),
   mainPanel(
     tabsetPanel(
       type = "tabs",
@@ -70,6 +72,16 @@ intro_tab <- tabPanel(
 
 # Widget
 chart1_widget <- sidebarPanel(
+  radioButtons(
+    inputId = "trend_selection",
+    label = h6("Select a trend"),
+    choices = list(
+      "Total Collisions" = 1,
+      "People Involved" = 2,
+      "Vehicles Involved" = 3
+    ),
+    selected = 1
+  ),
   selectizeInput(
     inputId = "year1_selection",
     label = h6("Select up to 4 years to compare"),
@@ -160,19 +172,25 @@ viz_tab <- navbarMenu(
     "Collision Trends Over Time",
     sidebarLayout(chart1_widget, chart1_plot),
     hr(),
-    includeMarkdown("text-files/about-us.md")
+    includeMarkdown("text-files/collision-trends.md")
   ),
   tabPanel(
     "Casualties from Collisions",
-    sidebarLayout(chart2_widget, chart2_plot)
+    sidebarLayout(chart2_widget, chart2_plot),
+    hr(),
+    includeMarkdown("text-files/casualties.md")
   ),
   tabPanel(
     "Conditions during Accidents",
-    sidebarLayout(chart3_widget, chart3_plot)
+    sidebarLayout(chart3_widget, chart3_plot),
+    hr(),
+    includeMarkdown("text-files/conditions.md")
   ),
   tabPanel(
     "Collision Types Comparison",
-    sidebarLayout(chart4_widget, chart4_plot)
+    sidebarLayout(chart4_widget, chart4_plot),
+    hr(),
+    includeMarkdown("text-files/collision-types.md")
   )
 )
 
@@ -196,8 +214,9 @@ conclusion_tab <- tabPanel(
   tabsetPanel(
     type = "tabs",
     tabPanel(
-      "Key Takeaways", 
-      includeMarkdown("text-files/insights.md")),
+      "Key Takeaways",
+      includeMarkdown("text-files/insights.md")
+    ),
     tabPanel(
       "Table Summary",
       sidebarLayout(

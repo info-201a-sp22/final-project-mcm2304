@@ -1,6 +1,6 @@
 ### Analysis
 
- it allows us to look at all the possible road conditions and easily assess the main cause of collisions. We decided not to combine all the values into one big chart as it would be messy and difficult to interpret.
+This chart allows us to look at all the possible road conditions and easily assess the main cause of collisions. We decided not to combine all the values into one big chart as it would be messy and difficult to interpret.
 
 From the Weather Conditions chart, we see that there are 119,681 collisions that occurred in Clear weather. Clear weather accounted for five times more collisions than Rainy weather, which was the second most collision on the chart (35,411 collisions).
 
