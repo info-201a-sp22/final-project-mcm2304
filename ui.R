@@ -90,7 +90,8 @@ chart3_tab <- tabPanel(
 conclusion_tab <- tabPanel(
   "Conclusion",
   fluidPage(
-    h1("Key Takeaways", align = "center")
+    h1("Key Takeaways", align = "center"),
+    includeMarkdown("conclusion.md")
   )
 )
 
