@@ -1,3 +1,5 @@
+### Conclusion
+
 From our data, we can see that each year follows a similar shape of when more collisions occur. We also found that the overall number of casualties occurring from collisions has been decreasing since 2006. Finally, we found that different driving conditions, such as weather, road, or light, surprisingly did not appear to have a large effect on the number of collisions that occurred. 
 
 Looking at the yearly collision data, it was interesting to see how the number of collisions per year largely had a similar shape from year to year, even if the numbers themselves varied. From the chart, we can notice that the number of collisions dips in the month of February, then increases to a more steady number for the next half of the year, only to increase again in October. 
