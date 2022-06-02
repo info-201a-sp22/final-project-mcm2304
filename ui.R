@@ -40,10 +40,22 @@ intro_tab <- tabPanel(
   mainPanel(
     tabsetPanel(
       type = "tabs",
-      tabPanel("About the Project", includeMarkdown("text-files/about-the-project.md")),
-      tabPanel("Dataset", includeMarkdown("text-files/dataset.md")),
-      tabPanel("Limitations and Challenges", includeMarkdown("text-files/limit-challenge.md")),
-      tabPanel("About Us", includeMarkdown("text-files/about-us.md")),
+      tabPanel(
+        "About the Project",
+        includeMarkdown("text-files/about-the-project.md")
+      ),
+      tabPanel(
+        "Dataset",
+        includeMarkdown("text-files/dataset.md")
+      ),
+      tabPanel(
+        "Limitations and Challenges",
+        includeMarkdown("text-files/limit-challenge.md")
+      ),
+      tabPanel(
+        "About Us",
+        includeMarkdown("text-files/about-us.md")
+      ),
     )
   )
 )
@@ -53,7 +65,7 @@ intro_tab <- tabPanel(
 # Widget
 chart1_widget <- sidebarPanel(
   selectizeInput(
-    inputId = "year_selection",
+    inputId = "year1_selection",
     label = h6("Select up to 4 years"),
     choices = sort(unique(collisions_df$YEAR)),
     options = list(maxItems = 4, placeholder = "Select a year"),
@@ -65,15 +77,6 @@ chart1_widget <- sidebarPanel(
 # Plot
 chart1_plot <- mainPanel(
   plotlyOutput(outputId = "chart1")
-)
-
-# Visualization tab
-chart1_tab <- tabPanel(
-  "Chart 1",
-  sidebarLayout(
-    chart1_widget,
-    chart1_plot
-  )
 )
 
 # Chart 2 ----
@@ -94,16 +97,7 @@ chart2_widget <- sidebarPanel(
 
 # Plot
 chart2_plot <- mainPanel(
-  plotlyOutput(outputId = "casualty_chart")
-)
-
-# Visualization tab
-chart2_tab <- tabPanel(
-  "Casualties from Collisions",
-  sidebarLayout(
-    chart2_widget,
-    chart2_plot
-  )
+  plotlyOutput(outputId = "chart2")
 )
 
 # Chart 3 ----
@@ -127,12 +121,44 @@ chart3_plot <- mainPanel(
   plotlyOutput(outputId = "chart3")
 )
 
-# Visualization tab
-chart3_tab <- tabPanel(
-  "Chart 3",
-  sidebarLayout(
-    chart3_widget,
-    chart3_plot
+# Chart 4 ----
+
+# Widget
+chart4_widget <- sidebarPanel(
+  sliderInput(
+    inputId = "year4_selection",
+    label = h6("Select a year"),
+    min = min(collisions_df$YEAR),
+    max = max(collisions_df$YEAR),
+    value = 2004,
+    sep = ""
+  )
+)
+
+# Plot
+chart4_plot <- mainPanel(
+  plotlyOutput(outputId = "chart4")
+)
+
+# Visualization tab ----
+
+viz_tab <- navbarMenu(
+  "Visualization",
+  tabPanel(
+    "Collision Trends",
+    sidebarLayout(chart1_widget, chart1_plot)
+  ),
+  tabPanel(
+    "Casualties from Collisions",
+    sidebarLayout(chart2_widget, chart2_plot)
+  ),
+  tabPanel(
+    "Conditions during Accidents",
+    sidebarLayout(chart3_widget, chart3_plot)
+  ),
+  tabPanel(
+    "Collision Types",
+    sidebarLayout(chart4_widget, chart4_plot)
   )
 )
 
@@ -157,8 +183,6 @@ ui <- navbarPage(
   theme = my_theme,
   "Seattle Collisions",
   intro_tab,
-  chart1_tab,
-  chart2_tab,
-  chart3_tab,
+  viz_tab,
   conclusion_tab
 )

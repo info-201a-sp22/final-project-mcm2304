@@ -1,4 +1,4 @@
-## Authors
+### Authors
 1. Nancy Huang (nhuang1@uw.edu)
 2. Minh Mai (mcm2304@uw.edu)
 3. David Qin (sqin2019@uw.edu)

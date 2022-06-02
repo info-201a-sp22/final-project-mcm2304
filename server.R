@@ -32,7 +32,6 @@ collisions_df <- collisions_df %>%
 # Update dates
 dates <- as.Date(collisions_df$INCDATE)
 
-
 # Customize theme ----
 
 # Create an overall theme for plots
@@ -45,20 +44,6 @@ overall_theme <- theme(
   axis.title = element_text(size = (13), color = "steelblue4"),
   axis.text = element_text(color = "cornflowerblue", size = (10)),
 )
-
-# Plot the casualties
-plot_casualties <- function(data) {
-  ggplot(data, aes(Year, Quantity, color = Type)) +
-    geom_point() +
-    geom_line() +
-    labs(
-      title = "Total Number of Casualties Per Year", x = "Year",
-      y = "Number of Casualties", color = "Levels of Severity"
-    ) +
-    overall_theme +
-    theme(axis.text.x = element_text(angle = -45, vjust = 0.5)) +
-    scale_x_continuous(breaks = pretty_breaks())
-}
 
 # Chart 2 ----
 
@@ -101,6 +86,19 @@ levels(all_casualties_long$Type) <- list(
   "Serious Injuries" = "num_serious_injuries",
   "Fatalities" = "num_fatalities"
 )
+
+# Plot the casualties
+plot_casualties <- function(data) {
+  ggplot(data, aes(Year, Quantity, color = Type)) +
+    geom_point() +
+    geom_line() +
+    labs(
+      title = "Total Number of Casualties Per Year", x = "Year",
+      y = "Number of Casualties", color = "Levels of Severity"
+    ) +
+    overall_theme +
+    scale_x_continuous(breaks = pretty_breaks())
+}
 
 # Chart 3 ----
 
@@ -150,7 +148,6 @@ condition_plot <- function(data, type) {
       title = paste0(type, " Conditions"),
       x = paste0(type, " Condition"),
       y = "Number of Accidents",
-      fill = paste0(type, " Condition")
     ) +
     overall_theme +
     theme(
@@ -171,7 +168,7 @@ server <- function(input, output) {
   # Chart 1
   output$chart1 <- renderPlotly({
     chart1_df <- collisions_df %>%
-      filter(YEAR %in% input$year_selection) %>%
+      filter(YEAR %in% input$year1_selection) %>%
       mutate(Month = month(INCDATE)) %>%
       mutate(YEAR = as.character(YEAR)) %>%
       group_by(Month, YEAR) %>%
@@ -197,7 +194,7 @@ server <- function(input, output) {
         input$casualty_selection)
   )
 
-  output$casualty_chart <- renderPlotly({
+  output$chart2 <- renderPlotly({
     plot <- plot_casualties(data())
     return(plot)
   })
@@ -213,4 +210,29 @@ server <- function(input, output) {
     }
     return(plot)
   })
+    
+  # Chart 4
+  output$chart4 <- renderPlotly({
+    collision_types <- collisions_df %>%
+      filter(YEAR %in% input$year4_selection) %>%
+      group_by(COLLISIONTYPE) %>%
+      tally() %>%
+      na.omit()
+    
+    plot <- ggplot(collision_types, aes(reorder(COLLISIONTYPE, desc(n)), n, fill = COLLISIONTYPE)) +
+      geom_col() +
+      labs(
+        title = "Types of Collision",
+        x = "Collision Types",
+        y = "Number of Accidents",
+      ) +
+      overall_theme +
+      theme(legend.position = "none")
+    
+    return(plot)
+  })
 }
+
+# Test ----
+
+
