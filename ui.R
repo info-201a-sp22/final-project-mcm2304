@@ -48,25 +48,23 @@ intro_tab <- tabPanel(
     '<center><img src = "https://media.istockphoto.com/vectors/vector-of-two-car-accident-top-view-of-vehicle-collision-on-blue-vector-id1151971103?k=20&m=1151971103&s=612x612&w=0&h=QOsIoWB-41HXm-EuR6i5C2-7cGZSJfBJ9lxAvGtQErk=" width = "600"></center>'
   ),
   hr(),
-  mainPanel(
-    tabsetPanel(
-      type = "tabs",
-      tabPanel(
-        "About the Project",
-        includeMarkdown("text-files/about-the-project.md")
-      ),
-      tabPanel(
-        "Dataset",
-        includeMarkdown("text-files/dataset.md")
-      ),
-      tabPanel(
-        "Limitations and Challenges",
-        includeMarkdown("text-files/limit-challenge.md")
-      ),
-      tabPanel(
-        "About Us",
-        includeMarkdown("text-files/about-us.md")
-      )
+  tabsetPanel(
+    type = "tabs",
+    tabPanel(
+      "About the Project",
+      includeMarkdown("text-files/about-the-project.md")
+    ),
+    tabPanel(
+      "Dataset",
+      includeMarkdown("text-files/dataset.md")
+    ),
+    tabPanel(
+      "Limitations and Challenges",
+      includeMarkdown("text-files/limit-challenge.md")
+    ),
+    tabPanel(
+      "About Us",
+      includeMarkdown("text-files/about-us.md")
     )
   )
 )
@@ -222,6 +220,10 @@ summary_panel <- mainPanel(
 # Conclusion tab panel
 conclusion_tab <- tabPanel(
   "Insights",
+  HTML(
+    '<center><img src = "https://kennyperezlaw.com/wp-content/uploads/2021/09/Head-on-Car-Collisions%E2%80%94The-Most-Dangerous-Crashes.jpg" width = "600"></center>'
+  ),
+  hr(),
   tabsetPanel(
     type = "tabs",
     tabPanel(
@@ -243,7 +245,12 @@ conclusion_tab <- tabPanel(
 # 6. UI ----
 
 # Theme
-my_theme <- bs_theme(bootswatch = "cerulean")
+my_theme <- bs_theme(
+  bootswatch = "cerulean",
+  base_font = font_google("Tiro Gurmukhi"),
+  heading_font = font_google("EB Garamond"),
+  font_scale = 1.1
+)
 
 # Enable thematic for every plot inside the app
 thematic_shiny(font = "auto")
