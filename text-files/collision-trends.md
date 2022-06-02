@@ -1,0 +1,5 @@
+### Analysis
+
+Looking at collision trends from 2004 to 2021, we can see that there generally appears to be the highest number of collisions during the month of October or November. This increase in the number of collisions could be due to poor weather conditions during these months. Meanwhile, there appears to be the lowest number of collisions each year around February, which could be due to less traveling after the holiday months of November, December, and January.
+
+There again also appears to be overall a large fall in the number of collisions collisions during 2020 and 2021, with a very large one around March through May of 2020. This could be due to COVID beginning around these months, with lockdowns causing many people to stay at home more instead of commuting anywhere, thereby lowering the number of collisions. Meanwhile, in 2021, the number of collisions slowly increase, though not to the more typical levels of previous years, which could follow the slow loosening of COVID restrictions, leading to more people commuting.
