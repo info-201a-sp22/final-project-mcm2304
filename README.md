@@ -10,27 +10,17 @@
 
 Link: Link to Shiny App [here](https://mcm2304.shinyapps.io/seattle-collisions/)
 
-Please create the necessary files for your multi-page Shiny app in this GitHub repository. Consult the Canvas assignment for more details. Be sure to publish your app on Shinyapps.io.
-
-When you are finished, please add the text from your introductory and concluding pages below. You might want to use this GitHub repository as part of your digital portfolio, so you want this README.md to offer a brief description of the project and key takeaways.
-
-Feel free to delete these instructions for your final README.md file and to make your GitHub repository public if you would like others to be able to see it. 
-
 # Introduction
 
 As teens and young adults, one major milestone and accomplishment is obtaining a driver's license. Throughout the driving course, students learn how to correctly maneuver a vehicle, laws regarding right-of-way, and the safety of everyone on the road. With this in mind, we are curious to see which scenarios account for the most injuries and deaths on the road as driving a car is the most common method of transportation in the United States.
 
 1. Are collisions becoming more common as time progresses and more people are driving or does it remain the same throughout the years?
+ 
+2. How many people are injured and killed in traffic collisions each year in Seattle?
 
-1. Which type of roads account for the most injuries and deaths?
+3. What environmental factors (conditions) may have caused the incident?
 
-1. What environmental factors (conditions) may have caused the incident?
-
-1. What type of collision is more common?
-
-1. What kind of injuries occur from collisions?
-
-
+4. What type of collision is more common?
 
 # Conclusion / Summary Takeaways
 
@@ -42,5 +32,6 @@ From this same chart, we can also see the large fall in the number of collisions
 
 From our data on the total number of casualties per year by severity, we noticed that there was the highest number of injuries in 2005, while the highest number of serious injuries and fatalities occurred in 2006. Though these numbers of casualties have fluctuated in the years following, they have still remained lower than those record highs in 2005 and 2006. Similar to the number of collisions themselves, the number of injuries, both serious and not, plummeted in 2020, although fatalities did not. In 2021, however, the number of serious injuries and fatalities have crept back up.
 
-Finally, looking at the collision data by driving conditions, we found that while a considerable number of collisions did occur during conditions that are generally thought of as more dangerous for driving, overall most of the collisions occurred during more typical driving conditions. For example, for all three conditions: weather, road, and light, the conditions with the most collisions were clear weather, dry roads, and daylight. Meanwhile, the conditions with the next most number of collisions were raining weather, wet roads, and dark roads with street lights on. For all three of these second-most common collision conditions, the number of collisions was not even half of the top most common collision conditions: the clear weather, dry roads, and daylight conditions.
+Looking at the collision data by driving conditions, we found that while a considerable number of collisions did occur during conditions that are generally thought of as more dangerous for driving, overall most of the collisions occurred during more typical driving conditions. For example, for all three conditions: weather, road, and light, the conditions with the most collisions were clear weather, dry roads, and daylight. Meanwhile, the conditions with the next most number of collisions were raining weather, wet roads, and dark roads with street lights on. For all three of these second-most common collision conditions, the number of collisions was not even half of the top most common collision conditions: the clear weather, dry roads, and daylight conditions.
 
+Finally, we discovered that parked cars, rear-end collisions, and angles are the top three types of collisions from 2004 to 2021. We know that most crashes in Seattle are not fatal because most people are inattentive and hit parked cars since parked cars have been placed first in the majority of years. Collisions caused by rear-end collisions and angles are very common, each accounting for approximately 2000 cases per year. Other causes, such as sideswipe, left turn, pedestrian, and so on, are rare, ranging from 100 to less than 1000 cases each year.
