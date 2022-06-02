@@ -40,10 +40,10 @@ intro_tab <- tabPanel(
   mainPanel(
     tabsetPanel(
       type = "tabs",
-      tabPanel("About the Project", includeMarkdown("text-files/introduction.md")),
-      tabPanel("Dataset", includeMarkdown("text-files/introduction.md")),
-      tabPanel("Limitations and Challenges", includeMarkdown("text-files/introduction.md")),
-      tabPanel("About Us", includeMarkdown("text-files/introduction.md")),
+      tabPanel("About the Project", includeMarkdown("text-files/about-the-project.md")),
+      tabPanel("Dataset", includeMarkdown("text-files/dataset.md")),
+      tabPanel("Limitations and Challenges", includeMarkdown("text-files/limit-challenge.md")),
+      tabPanel("About Us", includeMarkdown("text-files/about-us.md")),
     )
   )
 )
