@@ -31,6 +31,78 @@ collisions_df <- collisions_df %>%
 # Update dates
 dates <- as.Date(collisions_df$INCDATE)
 
+# Chart 2 data ----
+# Total number of injuries each year
+num_injuries <- collisions_df %>%
+  group_by(YEAR) %>%
+  summarize(num_injuries = sum(INJURIES))
+
+# Total number of serious injuries each year
+num_serious_injuries <- collisions_df %>%
+  group_by(YEAR) %>%
+  summarize(num_serious_injuries = sum(SERIOUSINJURIES))
+
+# Total number of fatalities each year
+num_fatalities <- collisions_df %>%
+  group_by(YEAR) %>%
+  summarize(num_fatalities = sum(FATALITIES))
+
+# Pull all types of casualties into a list
+all_casualties_list <- list(num_injuries, num_serious_injuries, num_fatalities)
+
+# Merge all data frames
+all_casualties <- all_casualties_list %>% reduce(full_join, by = "YEAR")
+
+# Plot multiple y values as separate lines using long format data frame
+# Load "reshape2" and use melt function
+all_casualties_long <- melt(
+  all_casualties,
+  id = "YEAR",
+  measure = c("num_injuries", "num_serious_injuries", "num_fatalities")
+)
+
+all_casualties_long <- all_casualties_long %>% 
+  rename(Year = YEAR, Quantity = value, Type = variable)
+
+# Change variable names without changing the default colors
+# Use scale_color_manual if wanted to change both names and colors
+levels(all_casualties_long$Type) <- list(
+  "Injuries" = "num_injuries",
+  "Serious Injuries" = "num_serious_injuries",
+  "Fatalities" = "num_fatalities"
+)
+
+# Theme for plot
+overall_theme <- theme(
+  plot.title = element_text(
+    face = "bold", color = "deepskyblue4", size = (20), hjust = 0.5
+  ),
+  legend.title = element_text(color = "steelblue", face = "bold.italic"),
+  legend.text = element_text(face = "italic", color = "steelblue4"),
+  axis.title = element_text(size = (13), color = "steelblue4"),
+  axis.text = element_text(color = "cornflowerblue", size = (10)),
+)
+
+# Plot the casualties
+plot_casualties <- function(data) {
+  ggplot(data, aes(Year, Quantity, color = Type)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title = "Total Number of Casualties Per Year", x = "Year",
+    y = "Number of Casualties", color = "Levels of Severity"
+  ) +
+  overall_theme +
+  theme(axis.text.x = element_text(angle = -45, vjust = 0.5)) +
+  scale_x_continuous(breaks = pretty_breaks())
+}
+
+# Make it interactive
+# ggplotly(plot_casualties)
+
+
+
+
 # Chart 3 data ----
 
 # Total number of each weather
@@ -108,6 +180,17 @@ condition_plot <- function(data, type) {
 # 2. Server ----
 
 server <- function(input, output) {
+  # Chart 2
+  data <- reactive(
+    all_casualties_long %>% 
+      filter(all_casualties_long$Type %in% 
+               input$casualty_selection))
+
+  output$casualty_chart <- renderPlotly({
+    plot <- plot_casualties(data())
+    return(plot)
+  })
+  
   # Chart 3
   output$condition_chart <- renderPlotly({
     if (input$condition_selection == 1) {

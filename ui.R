@@ -26,9 +26,32 @@ chart1_tab <- tabPanel(
 
 # 3. Chart 2 ----
 
+# Widget
+chart2_widget <- sidebarPanel(
+  checkboxGroupInput(
+    inputId = "casualty_selection",
+    label = h6("Select a casualty type"),
+    choices = list(
+      "Injuries" = "Injuries",
+      "Serious Injuries" = "Serious Injuries",
+      "Fatalities" = "Fatalities"
+    ),
+    selected = "Injuries"
+  )
+)
+
+# Plot
+chart2_plot <- mainPanel(
+  plotlyOutput(outputId = "casualty_chart")
+)
+
 # Visualization tab
 chart2_tab <- tabPanel(
-  "Chart 2"
+  "Casualties from Collisions",
+  sidebarLayout(
+    chart2_widget,
+    chart2_plot
+  )
 )
 
 # 4. Chart 3 ----
