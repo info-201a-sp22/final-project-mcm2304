@@ -1,0 +1,3 @@
+### Analysis
+
+We found that the three most common forms of crashes from 2004 to 2021 were rear-end collisions, collisions with parked cars, and collisions at angles. We are aware that the majority of accidents that occur in Seattle do not result in fatalities since the majority of individuals are careless and hit parked cars. This is because parked cars have been positioned first in the majority of years. Rear-end and angle crashes account for around 2000 incidents of collisions per year, making them two of the most prevalent types of collisions. Other potential causes, such as a sideswipe, a left turn, a pedestrian, and so on, are infrequent, accounting for fewer than one thousand incidents annually on average.
