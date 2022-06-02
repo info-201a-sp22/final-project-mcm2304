@@ -69,7 +69,7 @@ chart1_plot <- mainPanel(
 
 # Visualization tab
 chart1_tab <- tabPanel(
-  "Chart 1",
+  "Collisions by Driving Conditions",
   sidebarLayout(
     chart1_widget,
     chart1_plot
@@ -129,7 +129,7 @@ chart3_plot <- mainPanel(
 
 # Visualization tab
 chart3_tab <- tabPanel(
-  "Chart 3",
+  "Collision Trends Over Time",
   sidebarLayout(
     chart3_widget,
     chart3_plot

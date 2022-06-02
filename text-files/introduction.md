@@ -18,7 +18,7 @@ As teens and young adults, one major milestone and accomplishment is obtaining a
 
 4. What type of collision is more common?
  
-5. Are cyclists, pedestrians, and motorcyclists more likely to be struck, or are collisions between cars and trucks more prevalent?
+5. What kind of injuries occur from collisions?
 
 ### The Dataset
 
