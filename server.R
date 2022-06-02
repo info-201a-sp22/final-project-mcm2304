@@ -4,7 +4,7 @@ library(scales)
 library(lubridate)
 
 
-# 1. Load and clean up data
+# Load and clean up data ----
 
 # Load original data
 collisions_raw_df <- read.csv("seattle-collisions.csv", stringsAsFactors = F)
@@ -30,6 +30,7 @@ collisions_df <- collisions_df %>%
 
 # Update dates
 dates <- as.Date(collisions_df$INCDATE)
+
 
 # Chart 2 data ----
 # Total number of injuries each year
@@ -73,6 +74,11 @@ levels(all_casualties_long$Type) <- list(
 )
 
 # Theme for plot
+
+# Customize theme ----
+
+# Create an overall theme for plots
+
 overall_theme <- theme(
   plot.title = element_text(
     face = "bold", color = "deepskyblue4", size = (20), hjust = 0.5
@@ -82,6 +88,7 @@ overall_theme <- theme(
   axis.title = element_text(size = (13), color = "steelblue4"),
   axis.text = element_text(color = "cornflowerblue", size = (10)),
 )
+
 
 # Plot the casualties
 plot_casualties <- function(data) {
@@ -104,6 +111,13 @@ plot_casualties <- function(data) {
 
 
 # Chart 3 data ----
+
+# Chart 1 ----
+
+
+
+# Chart 3 ----
+
 
 # Total number of each weather
 num_weather_condition <- collisions_df %>%
@@ -131,17 +145,6 @@ num_light_condition <- collisions_df %>%
   arrange(-n) %>%
   filter(!row_number() %in% c(3, 8)) %>%
   head(5)
-
-# Create an overall theme for plots
-overall_theme <- theme(
-  plot.title = element_text(
-    face = "bold", color = "deepskyblue4", size = (20), hjust = 0.5
-  ),
-  legend.title = element_text(color = "steelblue", face = "bold.italic"),
-  legend.text = element_text(face = "italic", color = "steelblue4"),
-  axis.title = element_text(size = (13), color = "steelblue4"),
-  axis.text = element_text(color = "cornflowerblue", size = (10)),
-)
 
 # Create condition plot function
 condition_plot <- function(data, type) {
@@ -177,7 +180,7 @@ condition_plot <- function(data, type) {
   ggplotly(plot, tooltip = "text")
 }
 
-# 2. Server ----
+# Server ----
 
 server <- function(input, output) {
   # Chart 2
@@ -191,8 +194,31 @@ server <- function(input, output) {
     return(plot)
   })
   
+
+  # Chart 1
+  output$chart1 <- renderPlotly({
+    chart1_df <- collisions_df %>%
+      filter(YEAR %in% input$year_selection) %>%
+      mutate(Month = month(INCDATE)) %>%
+      mutate(YEAR = as.character(YEAR)) %>%
+      group_by(Month, YEAR) %>%
+      summarize(Collisions = n())
+
+    plot <- ggplot(chart1_df, aes(x = Month, y = Collisions, color = YEAR)) +
+      geom_point() +
+      geom_line() +
+      labs(
+        title = paste0("Collision Trends Overtime"),
+        x = "Months", y = "Collisions", color = "Year(s)"
+      ) +
+      overall_theme +
+      scale_x_continuous(breaks = 1:12)
+
+    return(plot)
+  })
+
   # Chart 3
-  output$condition_chart <- renderPlotly({
+  output$chart3 <- renderPlotly({
     if (input$condition_selection == 1) {
       plot <- condition_plot(num_weather_condition, "Weather")
     } else if (input$condition_selection == 2) {

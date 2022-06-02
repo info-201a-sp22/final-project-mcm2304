@@ -1,10 +1,39 @@
 library(bslib)
+library(tidyverse)
+library(lubridate)
 library(plotly)
 library(markdown)
 
 
 my_theme <- bs_theme(bootswatch = "cerulean")
 
+
+# Load and clean up data ----
+
+# Load original data
+collisions_raw_df <- read.csv("seattle-collisions.csv", stringsAsFactors = F)
+
+# Remove unnecessary columns
+collisions_df <- collisions_raw_df %>%
+  select(
+    -INCKEY:-INTKEY, -EXCEPTRSNCODE, -EXCEPTRSNDESC, -INATTENTIONIND,
+    -PEDROWNOTGRNT:-HITPARKEDCAR
+  )
+
+# Add NA to blank cells
+collisions_df <- collisions_df %>%
+  mutate_all(na_if, "")
+
+# Save dates
+dates <- as.Date(collisions_df$INCDATE)
+
+# Remove the year 2003 and 2022
+collisions_df <- collisions_df %>%
+  mutate(YEAR = year(INCDATE)) %>%
+  filter(YEAR != 2003, YEAR != 2022)
+
+# Update dates
+dates <- as.Date(collisions_df$INCDATE)
 
 # 1. Introduction ----
 
@@ -19,9 +48,30 @@ intro_tab <- tabPanel(
 
 # 2. Chart 1 ----
 
+# Widget
+chart1_widget <- sidebarPanel(
+  selectizeInput(
+    inputId = "year_selection",
+    label = h6("Select up to 4 years"),
+    choices = sort(unique(collisions_df$YEAR)),
+    options = list(maxItems = 4, placeholder = "Select a year"),
+    selected = "2021",
+    multiple = T
+  )
+)
+
+# Plot
+chart1_plot <- mainPanel(
+  plotlyOutput(outputId = "chart1")
+)
+
 # Visualization tab
 chart1_tab <- tabPanel(
-  "Chart 1"
+  "Chart 1",
+  sidebarLayout(
+    chart1_widget,
+    chart1_plot
+  )
 )
 
 # 3. Chart 2 ----
@@ -72,7 +122,7 @@ chart3_widget <- sidebarPanel(
 
 # Plot
 chart3_plot <- mainPanel(
-  plotlyOutput(outputId = "condition_chart")
+  plotlyOutput(outputId = "chart3")
 )
 
 # Visualization tab
