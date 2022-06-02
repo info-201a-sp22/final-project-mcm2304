@@ -145,7 +145,7 @@ chart4_plot <- mainPanel(
 viz_tab <- navbarMenu(
   "Visualization",
   tabPanel(
-    "Collision Trends",
+    "Collision Trends Over Time",
     sidebarLayout(chart1_widget, chart1_plot)
   ),
   tabPanel(

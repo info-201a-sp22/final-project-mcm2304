@@ -133,21 +133,23 @@ num_light_condition <- collisions_df %>%
 condition_plot <- function(data, type) {
   # Change column names to modify the code easier
   colnames(data)[1:2] <- c("condition_type", "number")
-
+  
   # Plot
   plot <- ggplot(data) +
     geom_col(aes(reorder(condition_type, desc(number)),
-      number,
-      fill = condition_type,
-      text = paste0(
-        "# of Accidents: ",
-        formatC(number, big.mark = ",")
-      )
+                 number,
+                 fill = condition_type,
+                 text = paste0(
+                   "# of Accidents: ",
+                   formatC(number, big.mark = ",")
+                 )
     )) +
     labs(
-      title = paste0(type, " Conditions"),
+      title = paste0("Total Number of Collisions by ", 
+                     type, " Conditions"),
       x = paste0(type, " Condition"),
-      y = "Number of Accidents",
+      y = "Number of Collisions",
+      fill = paste0(type, " Condition")
     ) +
     overall_theme +
     theme(
@@ -157,7 +159,7 @@ condition_plot <- function(data, type) {
     scale_y_continuous(
       labels = label_number(scale_cut = cut_short_scale())
     )
-
+  
   # Make it interactive
   ggplotly(plot, tooltip = "text")
 }
@@ -173,32 +175,32 @@ server <- function(input, output) {
       mutate(YEAR = as.character(YEAR)) %>%
       group_by(Month, YEAR) %>%
       summarize(Collisions = n())
-
+    
     plot <- ggplot(chart1_df, aes(x = Month, y = Collisions, color = YEAR)) +
       geom_point() +
       geom_line() +
       labs(
-        title = paste0("Collision Trends Overtime"),
-        x = "Months", y = "Collisions", color = "Year(s)"
+        title = paste0("Collision Trends Over Time"),
+        x = "Months", y = "Number of Collisions", color = "Year(s)"
       ) +
       overall_theme +
       scale_x_continuous(breaks = 1:12)
-
+    
     return(plot)
   })
-
+  
   # Chart 2
   data <- reactive(
     all_casualties_long %>%
       filter(all_casualties_long$Type %in%
-        input$casualty_selection)
+               input$casualty_selection)
   )
 
   output$chart2 <- renderPlotly({
     plot <- plot_casualties(data())
     return(plot)
   })
-
+  
   # Chart 3
   output$chart3 <- renderPlotly({
     if (input$condition_selection == 1) {
@@ -232,7 +234,3 @@ server <- function(input, output) {
     return(plot)
   })
 }
-
-# Test ----
-
-
