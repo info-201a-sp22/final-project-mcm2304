@@ -36,11 +36,14 @@ dates <- as.Date(collisions_df$INCDATE)
 
 # Introduction tab panel
 intro_tab <- tabPanel(
-  "Introduction",
+  "Home Page",
   mainPanel(
     tabsetPanel(
       type = "tabs",
-      tabPanel("About Us", includeMarkdown("introduction.md")),
+      tabPanel("About the Project", includeMarkdown("text-files/introduction.md")),
+      tabPanel("Dataset", includeMarkdown("text-files/introduction.md")),
+      tabPanel("Limitations and Challenges", includeMarkdown("text-files/introduction.md")),
+      tabPanel("About Us", includeMarkdown("text-files/introduction.md")),
     )
   )
 )
@@ -140,7 +143,7 @@ conclusion_tab <- tabPanel(
   "Conclusion",
   fluidPage(
     h1("Key Takeaways", align = "center"),
-    includeMarkdown("conclusion.md")
+    includeMarkdown("text-files/conclusion.md")
   )
 )
 
